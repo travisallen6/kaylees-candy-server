@@ -1,0 +1,7 @@
+type UserProfile {
+  email: String!
+}
+
+type Query {
+  profile: UserProfile!
+}
