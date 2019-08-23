@@ -3,10 +3,11 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { DocumentNode } from 'graphql';
 import schemas from './schemas';
 import resolvers from './resolvers';
-// import {  } from './data-sources';
+import { Inventory } from './data-sources';
 import { config, logger } from './common';
 import autoBind = require('auto-bind');
 import { connect, set, connection } from 'mongoose';
+import jwt from './utils/jwt-utils'
 
 class Server {
   public app: express.Application = express();
@@ -53,6 +54,7 @@ class Server {
 
   private buildDataSources() {
     return {
+      inventory: new Inventory()
     };
   }
 

@@ -1,0 +1,12 @@
+type Product {
+  _id: String!
+  name: String!
+  description: String!
+  price: Int!
+  image: String!
+  quantityLeft: Int!
+}
+
+type Query {
+  products: [Product!]!
+}
