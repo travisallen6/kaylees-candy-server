@@ -7,6 +7,35 @@ type Product {
   quantityLeft: Int!
 }
 
+input CheckoutProductInput {
+  _id: String!
+  name: String!
+  description: String!
+  price: Int!
+  image: String!
+  quantityLeft: Int!
+  quantitySelected: Int!
+}
+
+type CheckoutProduct {
+  _id: String!
+  name: String!
+  description: String!
+  price: Int!
+  image: String!
+  quantityLeft: Int!
+  quantitySelected: Int!
+}
+
+type CheckoutResponse {
+  success: Boolean!
+  overOrderedProducts: [CheckoutProduct!]!
+}
+
 type Query {
   products: [Product!]!
+}
+
+type Mutation {
+  checkout(cart: [CheckoutProductInput!]!): CheckoutResponse
 }

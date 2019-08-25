@@ -23,42 +23,42 @@ const newProducts = [
     description: 'Milk chocolate and almonds walk into a bar...',
     price: 2,
     countPerBox: 6,
-    image: '~/assets/butterfinger.png'
+    image: '/almond-bar.jpg'
   },
   {
     name: 'W.F. Crisp Bars',
     description: 'Similar to those candy bars that start with a K and end with a rackle.',
     price: 2,
     countPerBox: 3,
-    image: '~/assets/klondike.png'
+    image: '/wf-crisp-bar.jpg'
   },
   {
     name: 'Premium Milk Chocolate Bar',
     description: 'Chocolate bars made from the finest cow\'s milk.',
     price: 2,
     countPerBox: 3,
-    image: '~/assets/snickers.png'
+    image: '/milk-chocolate-bar.jpg'
   },
   {
     name: 'Mint Meltaways',
     description: 'Individually wrapped mint infused chocolates.',
     price: 2,
     countPerBox: 3,
-    image: '~/assets/butterfinger.png'
+    image: '/mint-meltaways.jpg'
   },
   {
     name: 'Continental Almonds',
     description: 'Crunchy chocolate-covered almond deliciousness',
     price: 2,
     countPerBox: 12,
-    image: '~/assets/klondike.png'
+    image: '/continental-almonds.jpg'
   },
   {
     name: 'Caramel Whirls',
     description: 'Individually wrapped caramels covered in chocolate. Quite whirly too.',
     price: 2,
     countPerBox: 3,
-    image: '~/assets/snickers.png'
+    image: '/caramel-whirls.jpg'
   },
 ]
 void (async () => {
