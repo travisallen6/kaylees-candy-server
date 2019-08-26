@@ -1,3 +1,19 @@
+input UserInfo {
+  code: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+}
+
+type Token {
+  token: String!
+}
+
 type Query {
-  authenticateUser(code: String!): String!
+  checkCode(code: String!): Boolean!
+}
+
+type Mutation {
+  login(userInfo: UserInfo!): Token!
 }

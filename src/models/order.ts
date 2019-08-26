@@ -6,7 +6,7 @@ interface IOrderProduct {
   price: number;
 }
 
-interface IOrderDoc extends Document {
+export interface IOrderDoc extends Document {
   customerId: Schema.Types.ObjectId;
   productsOrdered: IOrderProduct[];
   paymentMethodSelected: string;
@@ -20,14 +20,20 @@ const orderProductSchema = new Schema({
 })
 
 const orderSchema = new Schema({
-  customerId: Schema.Types.ObjectId,
-  productsOrdered: [orderProductSchema],
+  customerId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+  productsOrdered: {
+    type: [orderProductSchema],
+    default: []
+  },
   paymentMethodSelected: {
     type: String,
     enum: ['cash', 'check', 'venmo', 'paypal']
   },
   confirmation: String
-})
+}, { timestamps: true })
 
 export default model<IOrderDoc>('order', orderSchema);
 

@@ -6,6 +6,6 @@ export default interface IProduct {
   image: string;
   quantityLeft: number;
   quantitySelected: number;
-  inCart: boolean;
-  onWaitList: boolean;
+  inCart: number;
+  onWaitList: number;
 }

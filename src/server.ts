@@ -3,7 +3,7 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { DocumentNode } from 'graphql';
 import schemas from './schemas';
 import resolvers from './resolvers';
-import { Inventory } from './data-sources';
+import { Inventory, User, Order, WaitlistProduct } from './models';
 import { config, logger } from './common';
 import autoBind = require('auto-bind');
 import { connect, set, connection } from 'mongoose';
@@ -40,22 +40,26 @@ class Server {
     const token = req.headers.authorization
       ? req.headers.authorization.replace('Bearer ', '')
       : '';
+    const models = {
+      Inventory,
+      User,
+      Order,
+      WaitlistProduct
+    }
     let user = null;
     if (token) {
       try {
-        user = {}
+        user = jwt.verify(token)
       } catch (error) {
         user = null;
       }
     }
 
-    return { req, res, user };
+    return { req, res, user, models };
   }
 
   private buildDataSources() {
-    return {
-      inventory: new Inventory()
-    };
+    return {};
   }
 
   private listen() {
