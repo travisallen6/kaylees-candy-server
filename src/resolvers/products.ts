@@ -118,6 +118,25 @@ class Resolvers {
 
     return { success: true };
   }
+
+  public async addAddress(
+    parent: any,
+    args: { address: { address: string, city: string, zip: string, apartment: string } },
+    { user, models: { Order } }: IContext
+  ) {
+    const { address } = args;
+    this.requireAuth(user)
+    try {
+      const currentOrder = await Order.findOne({ customerId: user.id, confirmation: { $exists: false } })
+      if (!currentOrder) throw new Error('Order not found');
+      currentOrder.set('address', { ...address })
+      await currentOrder.save();
+      return { success: true }
+    } catch (error) {
+      console.warn(error)
+      throw error;
+    }
+  }
 }
 
 const resolvers = new Resolvers()
@@ -128,6 +147,7 @@ export default {
   },
   Mutation: {
     checkout: resolvers.checkout,
-    updateWaitList: resolvers.updateWaitList
+    updateWaitList: resolvers.updateWaitList,
+    addAddress: resolvers.addAddress
   }
 }

@@ -37,6 +37,13 @@ input OverOrderedProductInput {
   price: Int!
 }
 
+input AddressInput {
+  address: String!
+  apartment: String
+  city: String!
+  zip: String!
+}
+
 type CheckoutResponse {
   success: Boolean!
   overOrderedProducts: [OverOrderedProduct!]!
@@ -49,4 +56,5 @@ type Query {
 type Mutation {
   checkout(cart: [CheckoutProductInput!]!): CheckoutResponse!
   updateWaitList(waitList: [OverOrderedProductInput!]!): MutationResponse!
+  addAddress(address: AddressInput!): MutationResponse!
 }
