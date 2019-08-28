@@ -1,0 +1,8 @@
+type TimeSlot {
+  date: Date!
+  slots: [String!]!
+}
+
+type Query {
+  getTimeSlots: [TimeSlot!]!
+}

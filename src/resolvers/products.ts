@@ -16,7 +16,6 @@ class Resolvers {
     args: {},
     { models: { Inventory }, user }: IContext
   ) {
-    this.requireAuth(user)
     const products = await Inventory.aggregate(productPipeline)
     return products;
   }
@@ -42,15 +41,17 @@ class Resolvers {
         idToRemaingQuantity.set(_id.toString(), quantityLeft)
       })
 
-      const [overOrderedItems, productsToSave] = args.cart.reduce(([overOrdered, validItems], cartItem) => {
+      const [overOrderedItems, productsToSave, adjustedCart] = args.cart.reduce(([overOrdered, validItems, newCart], cartItem) => {
         const remainingQuantity = idToRemaingQuantity.get(cartItem._id)
         if (cartItem.inCart > remainingQuantity) {
           overOrdered.push(cartItem)
+          newCart.push({ ...cartItem, inCart: remainingQuantity, quantityLeft: remainingQuantity, quantitySelected: 1 })
         } else {
           validItems.push(cartItem)
+          newCart.push({ ...cartItem, quantitySelected: 1 })
         }
-        return [overOrdered, validItems]
-      }, [[], []])
+        return [overOrdered, validItems, newCart]
+      }, [[], [], []])
 
       const waitlistConflicts = overOrderedItems.map(product => {
         const qtyLeft = idToRemaingQuantity.get(product._id);
@@ -78,15 +79,16 @@ class Resolvers {
       if (waitlistConflicts.length > 0) {
         return {
           success: false,
+          adjustedCart,
           overOrderedProducts: waitlistConflicts.map(({ _id, defaultWaitlistQty, name, image, quantityLeft, price }) => ({ _id, defaultWaitlistQty, name, image, confirmed: quantityLeft, price }))
         };
       }
       return {
         success: true,
+        adjustedCart,
         overOrderedProducts: []
       }
     } catch (error) {
-      console.log(error)
       throw error;
     }
   }
@@ -137,17 +139,51 @@ class Resolvers {
       throw error;
     }
   }
+
+  public async getTimeSlots(
+    parent: any,
+    args: {},
+    { models: { TimeSlot }, user }: IContext,
+  ) {
+    this.requireAuth(user)
+    const timeSlots = await TimeSlot.find({}).sort('date').exec();
+    return timeSlots;
+  }
+
+  public async addDeliveryDate(
+    parent: any,
+    args: { date: string, time: string },
+    { models: { Order }, user }: IContext
+  ) {
+    this.requireAuth(user);
+    try {
+      const { date, time } = args;
+      const userOrder = await Order.findOne({ customerId: user.id, confirmation: { $exists: false } }).exec();
+      if (!userOrder) {
+        throw new Error('Order not found')
+      }
+      userOrder.set('deliveryDate', { date, time })
+      await userOrder.save()
+      return {
+        success: true
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 const resolvers = new Resolvers()
 
 export default {
   Query: {
-    products: resolvers.getProducts
+    products: resolvers.getProducts,
+    getTimeSlots: resolvers.getTimeSlots
   },
   Mutation: {
     checkout: resolvers.checkout,
     updateWaitList: resolvers.updateWaitList,
-    addAddress: resolvers.addAddress
+    addAddress: resolvers.addAddress,
+    addDeliveryDate: resolvers.addDeliveryDate
   }
 }

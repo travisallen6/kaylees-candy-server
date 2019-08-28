@@ -26,6 +26,11 @@ const addressSchema = new Schema({
   zip: String,
 })
 
+const deliveryDateSchema = new Schema({
+  date: String,
+  time: String
+})
+
 const orderSchema = new Schema({
   customerId: {
     type: Schema.Types.ObjectId,
@@ -40,7 +45,8 @@ const orderSchema = new Schema({
     enum: ['cash', 'check', 'venmo', 'paypal']
   },
   confirmation: String,
-  address: addressSchema
+  address: addressSchema,
+  deliveryDate: deliveryDateSchema
 }, { timestamps: true })
 
 export default model<IOrderDoc>('order', orderSchema);

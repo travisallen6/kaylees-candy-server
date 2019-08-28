@@ -19,6 +19,18 @@ input CheckoutProductInput {
   onWaitList: Int!
 }
 
+type CartProduct {
+  _id: String!
+  name: String!
+  description: String!
+  price: Int!
+  image: String!
+  quantityLeft: Int!
+  quantitySelected: Int!
+  inCart: Int!
+  onWaitList: Int!
+}
+
 type OverOrderedProduct {
   _id: String!
   name: String!
@@ -46,6 +58,7 @@ input AddressInput {
 
 type CheckoutResponse {
   success: Boolean!
+  adjustedCart: [CartProduct!]!
   overOrderedProducts: [OverOrderedProduct!]!
 }
 
@@ -57,4 +70,5 @@ type Mutation {
   checkout(cart: [CheckoutProductInput!]!): CheckoutResponse!
   updateWaitList(waitList: [OverOrderedProductInput!]!): MutationResponse!
   addAddress(address: AddressInput!): MutationResponse!
+  addDeliveryDate(date: String!, time: String!): MutationResponse!
 }
