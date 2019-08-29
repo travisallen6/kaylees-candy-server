@@ -3,7 +3,7 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { DocumentNode } from 'graphql';
 import schemas from './schemas';
 import resolvers from './resolvers';
-import { Inventory, User, Order, WaitlistProduct, TimeSlot } from './models';
+import { Inventory, User, Order, WaitlistProduct, TimeSlot, Confirmation } from './models';
 import { config, logger } from './common';
 import autoBind = require('auto-bind');
 import { connect, set, connection } from 'mongoose';
@@ -45,7 +45,8 @@ class Server {
       User,
       Order,
       WaitlistProduct,
-      TimeSlot
+      TimeSlot,
+      Confirmation
     }
     let user = null;
     if (token) {

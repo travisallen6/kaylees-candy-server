@@ -14,7 +14,10 @@ export interface IOrderDoc extends Document {
 }
 
 const orderProductSchema = new Schema({
-  productId: Schema.Types.ObjectId,
+  productId: {
+    type: Schema.Types.ObjectId,
+    ref: 'product'
+  },
   quantity: Number,
   price: Number,
 })
@@ -46,7 +49,8 @@ const orderSchema = new Schema({
   },
   confirmation: String,
   address: addressSchema,
-  deliveryDate: deliveryDateSchema
+  deliveryDate: deliveryDateSchema,
+  confirmedAt: Date
 }, { timestamps: true })
 
 export default model<IOrderDoc>('order', orderSchema);

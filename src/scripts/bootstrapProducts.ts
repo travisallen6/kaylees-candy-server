@@ -2,35 +2,24 @@ import Product from '../models/product';
 import connectToMongo from './connectToMongo'
 import { config } from '../common'
 
-/**
- * 6 milk chocolate with almond bars
- * 3 W.F. Crisp Bars
- * 3 Premium milk chocolate bars
- * 3 Mint meltaways
- * 12 Continental Almonds
- * 3 Caramel whirls
- *
- * name: String,
-  description: String,
-  price: Number,
-  countPerBox: Number,
-  image: String
- */
+/*
+
+  6 caramel bars
+  3 milk chocolate bars
+  3 dark chocolate bars
+  6 mint meltaways
+  3 chocolate covered raisin boxes
+  9 chocolate covered almond boxes
+
+*/
 
 const newProducts = [
   {
-    name: 'Milk Chocolate with Almond Bars',
-    description: 'Milk chocolate and almonds walk into a bar...',
+    name: 'Caramel Chocolate Bar',
+    description: 'Creamy caramel hopelessly surrounded by chocolate.',
     price: 2,
     countPerBox: 6,
-    image: '/almond-bar.jpg'
-  },
-  {
-    name: 'W.F. Crisp Bars',
-    description: 'Similar to those candy bars that start with a K and end with a rackle.',
-    price: 2,
-    countPerBox: 3,
-    image: '/wf-crisp-bar.jpg'
+    image: '/caramel-bars.jpg'
   },
   {
     name: 'Premium Milk Chocolate Bar',
@@ -40,26 +29,34 @@ const newProducts = [
     image: '/milk-chocolate-bar.jpg'
   },
   {
+    name: 'Dark Chocolate Bar',
+    description: 'Chocolate living life on the dark side',
+    price: 2,
+    countPerBox: 3,
+    image: '/dark-chocolate-bar.jpg'
+  },
+  {
     name: 'Mint Meltaways',
     description: 'Individually wrapped mint infused chocolates.',
     price: 2,
-    countPerBox: 3,
+    countPerBox: 6,
     image: '/mint-meltaways.jpg'
+  },
+  {
+    name: 'Chocolate Covered Raisins',
+    description: 'Fund "Raisin" has never tasted so good',
+    price: 2,
+    countPerBox: 3,
+    image: '/chocolate-covered-raisins.jpg'
   },
   {
     name: 'Continental Almonds',
     description: 'Crunchy chocolate-covered almond deliciousness',
     price: 2,
-    countPerBox: 12,
+    countPerBox: 9,
     image: '/continental-almonds.jpg'
   },
-  {
-    name: 'Caramel Whirls',
-    description: 'Individually wrapped caramels covered in chocolate. Quite whirly too.',
-    price: 2,
-    countPerBox: 3,
-    image: '/caramel-whirls.jpg'
-  },
+
 ]
 void (async () => {
   await connectToMongo(config.mongodbUri);

@@ -82,7 +82,23 @@ const pipeline = [
     }
   }, {
     '$unwind': {
-      'path': '$orders'
+      'path': '$orders',
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$project': {
+      'name': 1,
+      'description': 1,
+      'price': 1,
+      'image': 1,
+      'totalQuantity': 1,
+      'orders': {
+        '$ifNull': [
+          '$orders', {
+            'quantity': 0
+          }
+        ]
+      }
     }
   }, {
     '$addFields': {

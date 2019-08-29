@@ -171,6 +171,37 @@ class Resolvers {
       throw error;
     }
   }
+
+  public async addPaymentAndConfirmOrder(
+    parent: any,
+    args: { payment: string },
+    { models: { Order, Confirmation, User }, user }: IContext
+  ) {
+    this.requireAuth(user);
+    try {
+      const { payment } = args;
+      // const userOrder = await Order.findOne({});
+      const userOrder = await Order.findOne({ customerId: user.id, confirmation: { $exists: false } }).exec();
+      if (!userOrder) {
+        throw new Error('Order not found')
+      }
+      const { email } = await User.findById(user.id)
+      const { confirmationNumber: confNum } = await Confirmation.findOneAndUpdate({ confirmationNumber: { $exists: true } }, { $inc: { confirmationNumber: 1 } });
+      const confirmationString = confNum.toString()
+      const leadingZeros = '0'.repeat(5 - confirmationString.length).concat(confirmationString);
+      userOrder.set('confirmation', leadingZeros)
+      userOrder.set('payment', payment)
+      userOrder.set('confirmedAt', new Date())
+      await userOrder.save()
+      return {
+        success: true,
+        confirmation: leadingZeros,
+        userEmail: email
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 const resolvers = new Resolvers()
@@ -184,6 +215,7 @@ export default {
     checkout: resolvers.checkout,
     updateWaitList: resolvers.updateWaitList,
     addAddress: resolvers.addAddress,
-    addDeliveryDate: resolvers.addDeliveryDate
+    addDeliveryDate: resolvers.addDeliveryDate,
+    addPaymentAndConfirmOrder: resolvers.addPaymentAndConfirmOrder
   }
 }

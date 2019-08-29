@@ -6,7 +6,9 @@ const {
   PORT,
   MONGODB_URI,
   LOG_LEVEL,
-  ACCESS_CODE
+  ACCESS_CODE,
+  EMAIL_USER,
+  EMAIL_PASS
 } = process.env
 
 class Config {
@@ -15,8 +17,10 @@ class Config {
   public readonly hostName = HOSTNAME;
   public readonly port = this.normalizePort(PORT);
   public readonly mongodbUri = MONGODB_URI;
-  public readonly logLevel = LOG_LEVEL
-  public readonly accessCode = ACCESS_CODE
+  public readonly logLevel = LOG_LEVEL;
+  public readonly accessCode = ACCESS_CODE;
+  public readonly emailUser = EMAIL_USER;
+  public readonly emailPass = EMAIL_PASS
 
   normalizePort(port: string) {
     const normalizedPort = +port;
@@ -33,7 +37,9 @@ class Config {
       'PORT',
       'MONGODB_URI',
       'LOG_LEVEL',
-      'ACCESS_CODE'
+      'ACCESS_CODE',
+      'EMAIL_USER',
+      'EMAIL_PASS'
     ].filter(variable => !process.env[variable]);
     if (missingVariables.length) {
       throw new Error(`ENV variables: ${missingVariables.join(', ')} are undefined`)

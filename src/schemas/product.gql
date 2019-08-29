@@ -62,6 +62,12 @@ type CheckoutResponse {
   overOrderedProducts: [OverOrderedProduct!]!
 }
 
+type PaymentAndConfirmation {
+  success: Boolean!
+  confirmation: String!
+  userEmail: String!
+}
+
 type Query {
   products: [Product!]!
 }
@@ -71,4 +77,5 @@ type Mutation {
   updateWaitList(waitList: [OverOrderedProductInput!]!): MutationResponse!
   addAddress(address: AddressInput!): MutationResponse!
   addDeliveryDate(date: String!, time: String!): MutationResponse!
+  addPaymentAndConfirmOrder(payment: String!): PaymentAndConfirmation!
 }

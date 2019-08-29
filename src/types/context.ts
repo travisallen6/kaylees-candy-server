@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IOrderDoc, IUser, IInventoryDoc, ITimeSlot } from '../types'
+import { IOrderDoc, IUser, IInventoryDoc, ITimeSlot, IConfirmationDoc } from '../types'
 import { Model } from 'mongoose'
 interface IContextUser {
   admin: boolean;
@@ -15,6 +15,7 @@ export default interface Context {
     User: Model<IUser>;
     Order: Model<IOrderDoc>;
     WaitlistProduct: Model<IOrderDoc>;
-    TimeSlot: Model<ITimeSlot>
+    TimeSlot: Model<ITimeSlot>;
+    Confirmation: Model<IConfirmationDoc>
   }
 }
