@@ -33,7 +33,7 @@ class Resolvers {
   ) {
     const { code, firstName, lastName, email, phone } = args.userInfo;
     const { accessCode } = config;
-    if (code !== accessCode) {
+    if (code.toLowerCase() !== accessCode) {
       throw new UserInputError('Incorrect code')
     }
     const user = await User.findOne({ email });
