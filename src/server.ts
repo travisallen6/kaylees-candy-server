@@ -14,7 +14,7 @@ class Server {
   constructor() {
     autoBind(this);
     const { isDev } = config
-    const typeDefs: DocumentNode = gql(schemas);
+    const typeDefs: DocumentNode = gql(schemas as any);
     const server = new ApolloServer({
       typeDefs,
       resolvers,

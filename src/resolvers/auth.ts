@@ -1,5 +1,5 @@
 import { config } from "../common";
-import { ApolloError, UserInputError } from "apollo-server-express";
+import { UserInputError } from "apollo-server-express";
 import { IContext } from '../types'
 import { jwt } from '../utils'
 import { v4 as randomId } from 'uuid'
