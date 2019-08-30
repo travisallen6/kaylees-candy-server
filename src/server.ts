@@ -65,7 +65,7 @@ class Server {
   }
 
   private listen() {
-    this.app.listen({ port: config.port }, () =>
+    this.app.listen(config.port, config.hostName, () =>
       logger.info(`⚓️ Hard to port ${config.port}`),
     );
   }
