@@ -35,12 +35,14 @@ class NodeMailer {
 
   public async sendMail(to: string, subject: string, html: string): Promise<{ info: SentMessageInfo, testUrl: string | null }> {
     const info = await this.transporter.sendMail({
-      from: 'Kaylee\'s Candy🍫 <kayleescandy@gmail.com>',
+
+      from: 'Kaylee\'s Candy🦄 <kayleescandy@gmail.com>',
       to: to,
       subject: subject,
       html: html
     });
     const testUrl = getTestMessageUrl(info) || null
+    if (testUrl) console.log(testUrl)
     return { info, testUrl }
   }
 }
