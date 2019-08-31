@@ -43,7 +43,7 @@ const orderSchema = new Schema({
     type: [orderProductSchema],
     default: []
   },
-  paymentMethodSelected: {
+  payment: {
     type: String,
     enum: ['cash', 'check', 'venmo', 'paypal']
   },
