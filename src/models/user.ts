@@ -8,6 +8,8 @@ export interface IUser extends mongoose.Document {
   lastName: string;
   phone?: String;
   id: string;
+  admin: boolean;
+  hash?: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -30,6 +32,11 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   id: { type: String, index: true },
+  admin: {
+    type: Boolean,
+    default: false
+  },
+  hash: String
 }, { timestamps: true });
 
 const User = mongoose.model<IUser>('user', userSchema);

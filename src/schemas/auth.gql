@@ -6,6 +6,11 @@ input UserInfo {
   phone: String!
 }
 
+input AdminInfo {
+  email: String!
+  password: String!
+}
+
 type Token {
   token: String!
 }
@@ -16,4 +21,5 @@ type Query {
 
 type Mutation {
   login(userInfo: UserInfo!): Token!
+  loginAdmin(adminInfo: AdminInfo!): Token!
 }

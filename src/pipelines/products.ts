@@ -110,6 +110,10 @@ const pipeline = [
       'totalQuantity': '$$REMOVE',
       'orders': '$$REMOVE'
     }
+  }, {
+    '$sort': {
+      'createdAt': 1
+    }
   }
 ]
 

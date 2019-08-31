@@ -45,7 +45,8 @@ const orderSchema = new Schema({
   },
   payment: {
     type: String,
-    enum: ['cash', 'check', 'venmo', 'paypal']
+    enum: ['cash', 'check', 'venmo', 'paypal', 'default'],
+    default: 'default'
   },
   confirmation: String,
   address: addressSchema,

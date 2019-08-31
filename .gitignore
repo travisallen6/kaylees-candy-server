@@ -48,3 +48,4 @@ authDbConnections.json
 
 
 dump.rdb
+src/scripts/registerAdmin.ts

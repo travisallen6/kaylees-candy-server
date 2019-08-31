@@ -1,0 +1,41 @@
+type OrderProduct {
+  productName: String!
+  qtyOrdered: Int!
+  productPrice: Int!
+}
+
+type Address {
+  address: String!
+  apartment: String
+  city: String!
+  zip: String!
+}
+type DeliveryDate {
+  date: String!
+  time: String!
+}
+type Customer {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+type CustomerOrder {
+  customerId: String!
+  createdAt: Date!
+  updatedAt: Date!
+  address: Address
+  deliveryDate: DeliveryDate
+  confirmation: String
+  confirmedAt: String
+  customer: Customer
+  totalDue: Int!
+  productsOrdered: [OrderProduct!]!
+}
+
+type Query {
+  orderSummary: [CustomerOrder!]!
+}
