@@ -2,7 +2,6 @@ import { config } from "../common";
 import { UserInputError, ForbiddenError } from "apollo-server-express";
 import { IContext } from '../types'
 import { jwt } from '../utils'
-import { v4 as randomId } from 'uuid'
 import autoBind = require("auto-bind");
 import * as bcrypt from 'bcryptjs'
 
