@@ -3,17 +3,26 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { DocumentNode } from 'graphql';
 import schemas from './schemas';
 import resolvers from './resolvers';
-import { Inventory, User, Order, WaitlistProduct, TimeSlot, Confirmation } from './models';
+import {
+  Inventory,
+  User,
+  Order,
+  WaitlistProduct,
+  TimeSlot,
+  Confirmation,
+} from './models';
 import { config, logger } from './common';
 import autoBind = require('auto-bind');
 import { connect, set, connection } from 'mongoose';
-import jwt from './utils/jwt-utils'
+import jwt from './utils/jwt-utils';
+import * as cors from 'cors';
 
 class Server {
   public app: express.Application = express();
   constructor() {
     autoBind(this);
-    const { isDev } = config
+    this.app.use(cors());
+    const { isDev } = config;
     const typeDefs: DocumentNode = gql(schemas as any);
     const server = new ApolloServer({
       typeDefs,
@@ -26,7 +35,6 @@ class Server {
 
     server.applyMiddleware({
       app: this.app,
-      cors: isDev,
     });
   }
 
@@ -46,12 +54,12 @@ class Server {
       Order,
       WaitlistProduct,
       TimeSlot,
-      Confirmation
-    }
+      Confirmation,
+    };
     let user = null;
     if (token) {
       try {
-        user = jwt.verify(token)
+        user = jwt.verify(token);
       } catch (error) {
         user = null;
       }
@@ -72,7 +80,7 @@ class Server {
 
   public async initialize() {
     try {
-      await this.connectToMongodb()
+      await this.connectToMongodb();
       this.listen();
     } catch (error) {
       throw error;
