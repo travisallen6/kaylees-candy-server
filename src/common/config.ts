@@ -8,11 +8,10 @@ const {
   LOG_LEVEL,
   ACCESS_CODE,
   EMAIL_USER,
-  EMAIL_PASS
-} = process.env
+  EMAIL_PASS,
+} = process.env;
 
 class Config {
-
   public readonly isDev = NODE_ENV !== 'production';
   public readonly hostName = HOSTNAME;
   public readonly port = this.normalizePort(PORT);
@@ -20,12 +19,12 @@ class Config {
   public readonly logLevel = LOG_LEVEL;
   public readonly accessCode = ACCESS_CODE;
   public readonly emailUser = EMAIL_USER;
-  public readonly emailPass = EMAIL_PASS
+  public readonly emailPass = EMAIL_PASS;
 
   normalizePort(port: string) {
     const normalizedPort = +port;
     if (!normalizedPort) {
-      throw new Error(`Incorrect value for PORT: ${normalizedPort}`)
+      throw new Error(`Incorrect value for PORT: ${normalizedPort}`);
     }
     return normalizedPort;
   }
@@ -39,12 +38,14 @@ class Config {
       'LOG_LEVEL',
       'ACCESS_CODE',
       'EMAIL_USER',
-      'EMAIL_PASS'
+      'EMAIL_PASS',
     ].filter(variable => !process.env[variable]);
     if (missingVariables.length) {
-      throw new Error(`ENV variables: ${missingVariables.join(', ')} are undefined`)
+      throw new Error(
+        `ENV variables: ${missingVariables.join(', ')} are undefined`,
+      );
     }
-  }
+  };
 }
 
 export default new Config();
